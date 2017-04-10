@@ -209,6 +209,7 @@ public class AddCardActivity extends AppCompatActivity implements ConfigurationL
             case DETAILS_ENTRY:
                 mActionBar.setTitle(R.string.bt_card_details);
                 mEditCardView.setCardNumber(mAddCardView.getCardForm().getCardNumber());
+                mEditCardView.setCardType(mAddCardView.getCardType(), mDropInRequest.getAmount());
                 mEditCardView.useUnionPay(this, mUnionPayCard, mUnionPayDebitCard);
                 mEditCardView.setVisibility(VISIBLE);
                 break;

@@ -39,6 +39,7 @@ public class AddCardView extends LinearLayout implements OnCardFormSubmitListene
     private AnimatedButtonView mAnimatedButtonView;
     private AddPaymentUpdateListener mListener;
     private String mCardNumber;
+    private CardType mCardType;
 
     public AddCardView(Context context) {
         super(context);
@@ -83,7 +84,9 @@ public class AddCardView extends LinearLayout implements OnCardFormSubmitListene
         mCardForm.setOnCardFormValidListener(this);
         mCardForm.setOnCardFormSubmitListener(this);
 
-        Set<String> cardTypes = new HashSet<>(configuration.getCardConfiguration().getSupportedCardTypes());
+        String[] supportedCards = {"American Express", "MasterCard", "Visa"};
+        Set<String> cardTypes = new HashSet<>();
+        cardTypes.addAll(Arrays.asList(supportedCards));
         if (!unionpaySupported) {
             cardTypes.remove(PaymentMethodType.UNIONPAY.getCanonicalName());
         }
@@ -129,6 +132,8 @@ public class AddCardView extends LinearLayout implements OnCardFormSubmitListene
         } else {
             mSupportedCardTypesView.setSelected(cardType);
         }
+
+        mCardType = cardType;
     }
 
     @Override
@@ -199,5 +204,9 @@ public class AddCardView extends LinearLayout implements OnCardFormSubmitListene
         }
 
         super.onRestoreInstanceState(state);
+    }
+
+    public CardType getCardType() {
+        return mCardType;
     }
 }

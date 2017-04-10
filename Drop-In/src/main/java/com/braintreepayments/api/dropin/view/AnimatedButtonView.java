@@ -86,4 +86,8 @@ public class AnimatedButtonView extends RelativeLayout implements OnClickListene
     public void setClickListener(OnClickListener onClickListener) {
         mOnClickListener = onClickListener;
     }
+
+    public void setText(String text) {
+        mButton.setText(text);
+    }
 }

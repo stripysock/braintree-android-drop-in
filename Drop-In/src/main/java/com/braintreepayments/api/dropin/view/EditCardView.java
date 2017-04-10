@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.braintreepayments.api.dropin.R;
 import com.braintreepayments.api.dropin.interfaces.AddPaymentUpdateListener;
@@ -18,14 +19,18 @@ import com.braintreepayments.api.exceptions.ErrorWithResponse;
 import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.cardform.OnCardFormFieldFocusedListener;
 import com.braintreepayments.cardform.OnCardFormSubmitListener;
+import com.braintreepayments.cardform.utils.CardType;
 import com.braintreepayments.cardform.view.CardEditText;
 import com.braintreepayments.cardform.view.CardForm;
+
+import java.util.Locale;
 
 public class EditCardView extends LinearLayout implements OnCardFormFieldFocusedListener, OnClickListener,
         OnCardFormSubmitListener {
 
     private CardForm mCardForm;
     private AnimatedButtonView mAnimatedButtonView;
+    private TextView txtSurcharge;
 
     private Configuration mConfiguration;
     private AddPaymentUpdateListener mListener;
@@ -62,6 +67,7 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
 
         mCardForm = (CardForm) findViewById(R.id.bt_card_form);
         mAnimatedButtonView = (AnimatedButtonView) findViewById(R.id.bt_animated_button_view);
+        txtSurcharge = (TextView) findViewById(R.id.txt_surcharge);
     }
 
     public void setup(Activity activity, Configuration configuration) {
@@ -72,6 +78,7 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
                 .cvvRequired(configuration.isCvvChallengePresent())
                 .postalCodeRequired(configuration.isPostalCodeChallengePresent())
                 .setup(activity);
+
         mCardForm.setOnCardFormSubmitListener(this);
 
         mAnimatedButtonView.setClickListener(this);
@@ -205,5 +212,28 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
         } else {
             mCardForm.setOnFormFieldFocusedListener(null);
         }
+    }
+
+    public void setCardType(CardType cardType, String amount) {
+        float surcharge;
+        switch (cardType) {
+            case VISA:
+                surcharge = 1.5f;
+                break;
+            case MASTERCARD:
+                surcharge = 1.5f;
+                break;
+            case AMEX:
+                surcharge = 3.0f;
+                break;
+            default:
+                surcharge = 3.0f;
+                break;
+        }
+
+        double surchargeValue = Double.parseDouble(amount) * surcharge / 100.0f;
+        txtSurcharge.setText(String.format(Locale.ENGLISH, "Surcharge (%.1f%%): $%.2f", surcharge, surchargeValue));
+        String buttonText = String.format(Locale.ENGLISH, "Pay $%.2f", Double.parseDouble(amount) + surchargeValue);
+        mAnimatedButtonView.setText(buttonText);
     }
 }

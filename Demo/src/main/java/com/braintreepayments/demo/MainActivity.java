@@ -27,6 +27,7 @@ import com.braintreepayments.api.models.PayPalAccountNonce;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.braintreepayments.api.models.PostalAddress;
 import com.braintreepayments.api.models.VenmoAccountNonce;
+import com.braintreepayments.cardform.utils.CardType;
 import com.google.android.gms.identity.intents.model.CountrySpecification;
 import com.google.android.gms.identity.intents.model.UserAddress;
 import com.google.android.gms.wallet.Cart;
@@ -117,13 +118,7 @@ public class MainActivity extends BaseActivity implements PaymentMethodNonceCrea
     public void launchDropIn(View v) {
         DropInRequest dropInRequest = new DropInRequest()
                 .clientToken(mAuthorization)
-                .amount("1.00")
-                .requestThreeDSecureVerification(Settings.isThreeDSecureEnabled(this))
-                .collectDeviceData(Settings.shouldCollectDeviceData(this))
-                .androidPayCart(getAndroidPayCart())
-                .androidPayShippingAddressRequired(Settings.isAndroidPayShippingAddressRequired(this))
-                .androidPayPhoneNumberRequired(Settings.isAndroidPayPhoneNumberRequired(this))
-                .androidPayAllowedCountriesForShipping(Settings.getAndroidPayAllowedCountriesForShipping(this));
+                .amount("62.00");
 
         if (Settings.isPayPalAddressScopeRequested(this)) {
             dropInRequest.paypalAdditionalScopes(Collections.singletonList(PayPal.SCOPE_ADDRESS));
