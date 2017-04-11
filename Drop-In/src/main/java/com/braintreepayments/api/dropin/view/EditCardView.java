@@ -214,25 +214,24 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
         }
     }
 
-    public void setCardType(CardType cardType, String amount) {
+    public void setCardType(CardType cardType, String amount, float visaSurcharge, float mastercardSurcharge) {
         float surcharge;
         switch (cardType) {
             case VISA:
-                surcharge = 1.5f;
+                surcharge = visaSurcharge;
                 break;
             case MASTERCARD:
-                surcharge = 1.5f;
+                surcharge = mastercardSurcharge;
                 break;
             case AMEX:
                 surcharge = 3.0f;
                 break;
             default:
-                surcharge = 3.0f;
-                break;
+                throw new IllegalStateException("Unknown payment type: " + cardType.name());
         }
 
-        double surchargeValue = Double.parseDouble(amount) * surcharge / 100.0f;
-        txtSurcharge.setText(String.format(Locale.ENGLISH, "Surcharge (%.1f%%): $%.2f", surcharge, surchargeValue));
+        double surchargeValue = Double.parseDouble(amount) * surcharge;
+        txtSurcharge.setText(String.format(Locale.ENGLISH, "Surcharge (%.1f%%): $%.2f", surcharge * 100.0f, surchargeValue));
         String buttonText = String.format(Locale.ENGLISH, "Pay $%.2f", Double.parseDouble(amount) + surchargeValue);
         mAnimatedButtonView.setText(buttonText);
     }

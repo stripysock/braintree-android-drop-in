@@ -118,7 +118,9 @@ public class MainActivity extends BaseActivity implements PaymentMethodNonceCrea
     public void launchDropIn(View v) {
         DropInRequest dropInRequest = new DropInRequest()
                 .clientToken(mAuthorization)
-                .amount("62.00");
+                .amount("62.00")
+                .setVisaSurchage(0.015f)
+                .setMasterCardSurcharge(0.03f);
 
         if (Settings.isPayPalAddressScopeRequested(this)) {
             dropInRequest.paypalAdditionalScopes(Collections.singletonList(PayPal.SCOPE_ADDRESS));
