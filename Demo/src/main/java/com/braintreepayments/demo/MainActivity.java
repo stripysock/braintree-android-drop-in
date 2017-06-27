@@ -120,7 +120,8 @@ public class MainActivity extends BaseActivity implements PaymentMethodNonceCrea
                 .clientToken(mAuthorization)
                 .amount("62.00")
                 .setVisaSurchage(0.015f)
-                .setMasterCardSurcharge(0.03f);
+                .setMasterCardSurcharge(0.015f)
+                .setAmexSurcharge(0.03f);
 
         if (Settings.isPayPalAddressScopeRequested(this)) {
             dropInRequest.paypalAdditionalScopes(Collections.singletonList(PayPal.SCOPE_ADDRESS));

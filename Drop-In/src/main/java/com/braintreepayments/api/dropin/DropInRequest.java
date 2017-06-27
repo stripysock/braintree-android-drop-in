@@ -39,6 +39,7 @@ public class DropInRequest implements Parcelable {
 
     private float mVisaSurcharge = 0.015f;
     private float mMastercardSurcharge = 0.015f;
+    private float mAmexSurcharge = 0.03f;
 
     public DropInRequest() {}
 
@@ -197,6 +198,11 @@ public class DropInRequest implements Parcelable {
         return this;
     }
 
+    public DropInRequest setAmexSurcharge(float surcharge) {
+        mAmexSurcharge = surcharge;
+        return this;
+    }
+
     /**
      * Get an {@link Intent} that can be used in {@link android.app.Activity#startActivityForResult(Intent, int)}
      * to launch {@link DropInActivity} and the Drop-in UI.
@@ -261,6 +267,10 @@ public class DropInRequest implements Parcelable {
         return mMastercardSurcharge;
     }
 
+    public float getAmexSurcharge() {
+        return mAmexSurcharge;
+    }
+
     boolean shouldRequestThreeDSecureVerification() {
         return mRequestThreeDSecureVerification;
     }
@@ -291,6 +301,7 @@ public class DropInRequest implements Parcelable {
         dest.writeByte(mRequestThreeDSecureVerification ? (byte) 1 : (byte) 0);
         dest.writeFloat(mVisaSurcharge);
         dest.writeFloat(mMastercardSurcharge);
+        dest.writeFloat(mAmexSurcharge);
     }
 
     protected DropInRequest(Parcel in) {
@@ -312,6 +323,7 @@ public class DropInRequest implements Parcelable {
         mRequestThreeDSecureVerification = in.readByte() != 0;
         mVisaSurcharge = in.readFloat();
         mMastercardSurcharge = in.readFloat();
+        mAmexSurcharge = in.readFloat();
     }
 
     public static final Creator<DropInRequest> CREATOR = new Creator<DropInRequest>() {

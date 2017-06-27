@@ -84,7 +84,7 @@ public class AddCardView extends LinearLayout implements OnCardFormSubmitListene
         mCardForm.setOnCardFormValidListener(this);
         mCardForm.setOnCardFormSubmitListener(this);
 
-        String[] supportedCards = {"MasterCard", "Visa"};
+        String[] supportedCards = {"MasterCard", "Visa", "American Express"};
         Set<String> cardTypes = new HashSet<>();
         cardTypes.addAll(Arrays.asList(supportedCards));
         if (!unionpaySupported) {

@@ -214,7 +214,7 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
         }
     }
 
-    public void setCardType(CardType cardType, String amount, float visaSurcharge, float mastercardSurcharge) {
+    public void setCardType(CardType cardType, String amount, float visaSurcharge, float mastercardSurcharge, float amexSurcharge) {
         float surcharge;
         switch (cardType) {
             case VISA:
@@ -224,7 +224,7 @@ public class EditCardView extends LinearLayout implements OnCardFormFieldFocused
                 surcharge = mastercardSurcharge;
                 break;
             case AMEX:
-                surcharge = 3.0f;
+                surcharge = amexSurcharge;
                 break;
             default:
                 throw new IllegalStateException("Unknown payment type: " + cardType.name());
